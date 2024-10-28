@@ -1,0 +1,43 @@
+﻿@model Product
+
+<h3 class="my-5">
+    @Model.Name
+</h3>
+
+<div class="row gx-5">
+    <img alt="@Model.Name" src="@Model.ImageUrl" class="img-fluid col-5" />
+    <div class="col-7">
+        <h4>@Model.Description</h4>
+        <p>@Model.Description</p>
+        <h3 class="pull-right">@Model.Price.ToString("c")</h3>
+        <div class="addToCart">
+            <p class="button">
+                @* <a class="btn btn-secondary" asp-controller="ShoppingCart" asp-action="AddToShoppingCart"
+                   asp-route-productId="@Model.ProductId">Add to cart</a> *@
+                <a asp-controller="ShoppingCart"
+                   asp-action="AddToShoppingCart"
+                   asp-route-productId="@Model.ProductId"
+                   class="btn btn-primary"
+                   onclick="return preventDoubleClick(this);">Add to Cart</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function preventDoubleSubmit(form) {
+            if (form.submitting) return false;
+            form.submitting = true;
+            form.querySelector('button[type="submit"]').disabled = true;
+            return true;
+        }
+
+        function preventDoubleClick(link) {
+            if (link.clicking) return false;
+            link.clicking = true;
+            link.style.pointerEvents = 'none';
+            return true;
+        }
+    </script>
+}
